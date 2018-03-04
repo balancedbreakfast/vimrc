@@ -52,15 +52,15 @@ if executable('ag')
     " Use ag over grep
     set grepprg=ag\ --nogroup\ --nocolor
 
+    " Bind K to grep word under cursor (only works w/ TSS)
+    nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
     " Use ag in CtrlP for listing files
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
     " ag is fast enough that CtrlP doesnt need to cache
     let g:ctrlp_use_caching = 0
 endif
-
-" Bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " Cleanup netrw default vim file browser
 let g:netrw_banner=0 "disable banner
