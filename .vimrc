@@ -1,69 +1,56 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
+set nocompatible
+filetype off
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'pangloss/vim-javascript'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'Raimondi/delimitMate'
-Plugin 'scrooloose/syntastic'
-Plugin 'ahayman/vim-nodejs-complete'
-Plugin 'Lokaltog/vim-distinguished'
 Plugin 'scrooloose/nerdtree'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'tpope/vim-fugitive'
 
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-"
-
-set t_Co=256
-syntax on
-set number
-set background=dark
-color distinguished 
-
-" Tabs and indentation
+call vundle#end()
 filetype plugin indent on
-" show existing tab with 4 spaces width
+
+autocmd vimenter * NERDTree
+
+syntax enable
+set t_Co=256
+set t_ut=
 set tabstop=4
-" when indenting with '>', use 4 spaces width
+set softtabstop=4
 set shiftwidth=4
-" On pressing tab, insert 4 spaces
 set expandtab
+set number
+filetype indent on
 
-" Easier split window navigation
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+set splitright
+set splitbelow
+set showmatch
+set incsearch
+set hlsearch
 
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
-set completeopt=longest,menuone
+set path+=**
+set wildignore+=**/node_modules/**
+map <c-p> :find 
+set wildmenu
 
-" NERDTree Config
+let g:netrw_banner=0 "disable banner
+let g:netrw_browse_split=4
+let g:netrw_altv=1
+let g:netrw_liststyle=3
 
-"Automatically enter NERDTree if vim is used without specifiying a file
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+let g:jsx_ext_required = 0
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']

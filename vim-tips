@@ -1,0 +1,6 @@
+On Mac OSX
+Copy the whole file - :%w !pbcopy
+Paste from clipboard - :r !pbpaste
+
+General
+Delete all lines of a file - gg dG
