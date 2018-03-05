@@ -1,4 +1,3 @@
-
 " Vundle boilerplate and plugins
 set nocompatible
 filetype off
@@ -60,6 +59,9 @@ if executable('ag')
 
     " Bind K to grep word under cursor (only works w/ TSS)
     nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+    " Enable Ag command to search project for string
+    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
     " Use ag in CtrlP for listing files
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
