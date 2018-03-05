@@ -4,3 +4,13 @@ Paste from clipboard - :r !pbpaste
 
 General
 Delete all lines of a file - gg dG
+
+Comment out lines:
+    - block lines with ctrl+v
+    - press I and insert comment signs (//)
+    - escape
+
+Uncomment out lines:
+    - select commented lines with ctrl+v
+    - press d to delete
+

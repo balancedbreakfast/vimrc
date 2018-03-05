@@ -37,6 +37,12 @@ filetype indent on
 set splitright
 set splitbelow
 
+" Make the active split more obvious by making the status bar lighter
+hi StatusLine   ctermfg=15  guifg=#ffffff ctermbg=239 guibg=#4e4e4e cterm=bold gui=bold
+
+" Set relative filepath in status bar
+set statusline+=%f
+
 " Search config, highlighting, show match as I'm typing
 set showmatch
 set incsearch
