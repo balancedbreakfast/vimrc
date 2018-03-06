@@ -1,4 +1,3 @@
-
 " Requires Vim 7.4+, eslint, tern-config, and The Silver Searcher
 
 " Vundle boilerplate and plugins
@@ -13,7 +12,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomasiser/vim-code-dark'
 Plugin 'joshdick/onedark.vim'
@@ -43,15 +41,6 @@ set splitbelow
 
 " Make the active split more obvious by making the status bar lighter
 hi StatusLine   ctermfg=15  guifg=#ffffff ctermbg=239 guibg=#4e4e4e cterm=bold gui=bold
-
-" Start autocompletion after 4 chars. (For YouCompleteMe) Note also need
-" .tern-config in home folder for JS
- let g:ycm_min_num_of_chars_for_completion = 4
- let g:ycm_min_num_identifier_candidate_chars = 4
- let g:ycm_enable_diagnostic_highlighting = 0
-" Don't show YCM's preview window [ I find it really annoying ]
- set completeopt-=preview
- let g:ycm_add_preview_to_completeopt = 0
 
 " Set relative filepath in status bar
 set statusline+=%f
