@@ -9,13 +9,14 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'vim-syntastic/syntastic'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomasiser/vim-code-dark'
 Plugin 'joshdick/onedark.vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'w0rp/ale'
+Plugin 'vim-airline/vim-airline'
 
 call vundle#end()
 filetype plugin indent on
@@ -35,9 +36,16 @@ set expandtab
 set number
 filetype indent on
 
+" Make backspace work as intended
+set backspace=indent,eol,start
+
 " Config for new splits opening to the right and bottom
 set splitright
 set splitbelow
+
+" Opens buffers from quickfix in a new tab by default or switches to the
+" existing tab if it is already open
+set switchbuf+=usetab,newtab
 
 " Make the active split more obvious by making the status bar lighter
 hi StatusLine   ctermfg=15  guifg=#ffffff ctermbg=239 guibg=#4e4e4e cterm=bold gui=bold
@@ -79,15 +87,21 @@ let g:netrw_browse_split=4
 let g:netrw_altv=1
 let g:netrw_liststyle=3
 
+" Javascript Folding
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+    " Set folds to be auto opened
+    autocmd FileType javascript normal zR
+augroup END
+
 " for jsx linting to be enabled in regular .js files
 let g:jsx_ext_required = 0
 
-" Syntastic basic recommended config
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
+" Configure Ale to fix javascript
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
+
+" Set this to config Ale with  Airline.
+let g:airline#extensions#ale#enabled = 1
