@@ -1,8 +1,9 @@
-On Mac OSX
+----- On Mac OSX -----
 Copy the whole file - :%w !pbcopy
 Paste from clipboard - :r !pbpaste
 
-General
+
+----- General -----
 Delete all lines of a file - gg dG
 
 Comment out lines:
@@ -14,3 +15,32 @@ Uncomment out lines:
     - select commented lines with ctrl+v
     - press d to delete
 
+Move row below cursor to cursor's current row: J
+
+Open file under cursor in new tab: ctrl-w gf
+
+Copy a line (or multiple lines) from anywhere in buffer to current cursor position - :142,145t.
+
+Navigating a file: ctrl-d to move down half a screen, ctrl-u to move up. also ctrl-e to move down and ctrl-y to move up
+
+
+----- Cool combos -----
+Format, in tag (think html tag)
+= i t
+
+Format in { }
+= i {
+
+Format in ( )
+= i (
+
+Delete 'around' { } so it takes the stuff inside and the curly braces
+d a {
+
+Delete 'around' tags (think <div></div>) so it deletes the whole element
+d a t
+
+Delete 'around' ( ) 
+d a (
+
+Can replace the d with y as well to yank
