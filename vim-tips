@@ -23,6 +23,7 @@ Copy a line (or multiple lines) from anywhere in buffer to current cursor positi
 
 Navigating a file: ctrl-d to move down half a screen, ctrl-u to move up. also ctrl-e to move down and ctrl-y to move up
 
+Paste from yank register: "0p
 
 ----- Cool combos -----
 Format, in tag (think html tag)
