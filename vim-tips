@@ -35,7 +35,7 @@ Can replace the d with y as well to yank
 ----- NAVIGATING A PROJECT -----
 
 ctrl-w gf  :  Open file under cursor in new tab
-qa  :  close all vim windows
+:qa  :  close all vim windows
 
 ----- NAVIGATING A FILE -----
 zz  :  center the file on cursor
