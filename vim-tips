@@ -1,10 +1,7 @@
------ On Mac OSX -----
-Copy the whole file - :%w !pbcopy
-Paste from clipboard - :r !pbpaste
+----- EDITING A FILE -----
 
-
------ General -----
-Delete all lines of a file - gg dG
+gg dG  :  Delete all lines of a file
+J  :  Move row below cursor to cursor's current row
 
 Comment out lines:
     - block lines with ctrl+v
@@ -15,17 +12,6 @@ Uncomment out lines:
     - select commented lines with ctrl+v
     - press d to delete
 
-Move row below cursor to cursor's current row: J
-
-Open file under cursor in new tab: ctrl-w gf
-
-Copy a line (or multiple lines) from anywhere in buffer to current cursor position - :142,145t.
-
-Navigating a file: ctrl-d to move down half a screen, ctrl-u to move up. also ctrl-e to move down and ctrl-y to move up
-
-Paste from yank register: "0p
-
------ Cool combos -----
 Format, in tag (think html tag)
 = i t
 
@@ -45,3 +31,28 @@ Delete 'around' ( )
 d a (
 
 Can replace the d with y as well to yank
+
+----- NAVIGATING A PROJECT -----
+
+ctrl-w gf  :  Open file under cursor in new tab
+
+
+----- NAVIGATING A FILE -----
+zz  :  center the file on cursor
+ctrl-d  :  move down half a screen
+ctrl-u  :  move up half a screen
+ctrl-e  :  move screen down by 1
+ctrl-y  :  move screen up by 1
+
+
+----- COPY AND PASTING -----
+"0p  :  paste from yank register
+
+Copy to system clipboard: "*y
+Paste from system clipboard: "*p
+
+Copy a line (or multiple lines) from anywhere in buffer to current cursor position - :142,145t.
+
+Copy the whole file - :%w !pbcopy
+Paste from clipboard - :r !pbpaste
+
