@@ -17,6 +17,7 @@ Plugin 'joshdick/onedark.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
+Plugin 'airblade/vim-gitgutter'
 
 call vundle#end()
 filetype plugin indent on
@@ -41,6 +42,7 @@ set shiftwidth=4
 set expandtab
 set number
 filetype indent on
+set relativenumber
 
 " Make backspace work as intended
 set backspace=indent,eol,start
@@ -111,3 +113,4 @@ let g:ale_fixers = {
 
 " Set this to config Ale with  Airline.
 let g:airline#extensions#ale#enabled = 1
+
