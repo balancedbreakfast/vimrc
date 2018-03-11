@@ -56,3 +56,8 @@ Copy a line (or multiple lines) from anywhere in buffer to current cursor positi
 Copy the whole file - :%w !pbcopy
 Paste from clipboard - :r !pbpaste
 
+----- OTHER -----
+q<letter or number>  :  starts recording a macro at the given register
+<how many times>@<letter or number>  :  exexcutes the recorded macro at the given register
+
+@: (then afterwards you can use @@)  :  repeats the last ':' command

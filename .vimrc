@@ -1,3 +1,5 @@
+
+
 " Requires Vim 7.4+, eslint, tern-config, and The Silver Searcher
 
 " Vundle boilerplate and plugins
@@ -18,6 +20,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-scripts/AutoComplPop'
+Plugin 'tpope/vim-surround'
 
 call vundle#end()
 filetype plugin indent on
