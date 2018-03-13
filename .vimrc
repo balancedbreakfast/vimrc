@@ -55,6 +55,12 @@ set backspace=indent,eol,start
 set splitright
 set splitbelow
 
+" Ctrl hjkl to move between splits
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
 " Opens buffers from quickfix in a new tab by default or switches to the
 " existing tab if it is already open
 set switchbuf+=usetab,newtab
