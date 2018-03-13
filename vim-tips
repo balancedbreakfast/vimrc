@@ -43,7 +43,7 @@ ctrl-d  :  move down half a screen
 ctrl-u  :  move up half a screen
 ctrl-e  :  move screen down by 1
 ctrl-y  :  move screen up by 1
-
+^  :  move to the first none whitespace character of the line
 
 ----- COPY AND PASTING -----
 "0p  :  paste from yank register
