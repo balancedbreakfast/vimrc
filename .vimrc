@@ -1,5 +1,3 @@
-
-
 " Requires Vim 7.4+, eslint, tern-config, and The Silver Searcher
 
 " Vundle boilerplate and plugins
@@ -21,7 +19,7 @@ Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-scripts/AutoComplPop'
-Plugin 'tpope/vim-surround'
+Plugin 'Raimondi/delimitMate'
 
 call vundle#end()
 filetype plugin indent on
@@ -88,6 +86,9 @@ if executable('ag')
 
     " Bind K to grep word under cursor (only works w/ TSS)
     nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+    " Bind \ f to search for string in project
+    nnoremap <Leader>k :Ag 
 
     " Enable Ag command to search project for string
     command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
