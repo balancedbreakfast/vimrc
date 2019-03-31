@@ -45,6 +45,13 @@ select a bunch of lines you want to sort alphabetically then type :sort
 
 run normal mode on multiple lines: select a bunch of lines then type :normal A; (for example to append ; to the end of each line)
 
+[CUSTOM vim-surround]  
+    :  Capital V (select some lines) then type S<div className="container"> TO SURROUND THAT WHOLE CHUNK WITH A TAG WOAH
+    :  yss'  -   to wrap line with '
+    :  dst   -   delete surrounding tag
+    :  cst<div className="whatever">   -   change surrounding tag to div with class "whatever"
+
+
 ----- NAVIGATING A PROJECT -----
 
 ctrl-w gf  :  Open file under cursor in new tab
