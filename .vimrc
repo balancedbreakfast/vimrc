@@ -19,7 +19,7 @@ Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-scripts/AutoComplPop'
-Plugin 'Raimondi/delimitMate'
+Plugin 'tpope/vim-surround'
 
 call vundle#end()
 filetype plugin indent on
@@ -45,6 +45,13 @@ set expandtab
 set number
 filetype indent on
 set relativenumber
+
+" Show whitespace characters
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
+set list
+
+" Spell check on markdown files
+autocmd FileType markdown setlocal spell spelllang=en_us
 
 " Make backspace work as intended
 set backspace=indent,eol,start
@@ -87,9 +94,6 @@ if executable('ag')
     " Bind K to grep word under cursor (only works w/ TSS)
     nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-    " Bind \ f to search for string in project
-    nnoremap <Leader>k :Ag 
-
     " Enable Ag command to search project for string
     command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
@@ -100,6 +104,9 @@ if executable('ag')
     let g:ctrlp_use_caching = 0
 endif
 
+" :grep! shortcut
+command! -nargs=+ -complete=file -bar Search grep! <args>|cw
+
 " Cleanup netrw default vim file browser
 let g:netrw_banner=0 "disable banner
 let g:netrw_browse_split=4
@@ -109,7 +116,7 @@ let g:netrw_liststyle=3
 " Javascript Folding
 augroup javascript_folding
     au!
-    au FileType javascript setlocal foldmethod=syntax
+    au FileType javascript setlocal foldmethod=indent " This line causes lag when foldmethod-syntax
     " Set folds to be auto opened
     autocmd FileType javascript normal zR
 augroup END
@@ -118,10 +125,29 @@ augroup END
 let g:jsx_ext_required = 0
 
 " Configure Ale to fix javascript
-let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\}
+" let g:ale_fixers = {
+" \   'javascript': ['eslint'],
+" \}
 
 " Set this to config Ale with  Airline.
 let g:airline#extensions#ale#enabled = 1
+
+" Jump to CSS definition using :CSS
+function! JumpToCSS()
+  set iskeyword+=-
+  let id_pos = searchpos("id", "nb", line('.'))[1]
+  let class_pos = searchpos("class", "nb", line('.'))[1]
+
+  if class_pos > 0 || id_pos > 0
+    if class_pos < id_pos
+      execute ":vim '#".expand('<cword>')."' **/*.css"
+      execute ":normal zz"
+    elseif class_pos > id_pos
+      execute ":vim '.".expand('<cword>')."' **/*.css"
+      execute ":normal zz"
+    endif
+  endif
+endfunction
+
+:command CSS :call JumpToCSS()
 

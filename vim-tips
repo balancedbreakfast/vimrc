@@ -1,5 +1,14 @@
 ----- EDITING A FILE -----
 
+q[any key] : start macro recording into a register (press q at the end again to end the recording)
+@[that key]: replay the macro
+
+. : replay last command like 'yit' or even something with insert
+
+:%s/findThisWord/replaceWithThis/g  : Find a word and replace all instances with 2nd word.
+
+:%s/foo/bar/gc  :  Find and replace but ask for confirmation for each word.
+
 gg dG  :  Delete all lines of a file
 J  :  Move row below cursor to cursor's current row
 
@@ -32,10 +41,21 @@ d a (
 
 Can replace the d with y as well to yank
 
+select a bunch of lines you want to sort alphabetically then type :sort
+
+run normal mode on multiple lines: select a bunch of lines then type :normal A; (for example to append ; to the end of each line)
+
 ----- NAVIGATING A PROJECT -----
 
 ctrl-w gf  :  Open file under cursor in new tab
 :qa  :  close all vim windows
+
+:vimgrep /the-string-you're-looking-for/ **/*.js : search for the string in all files that match the regex
+:cw : show the list of results from the search
+
+gv  :  selects the last selected thing
+
+[CUSTOM] move cursor anywhere on css class or ID and type :CSS to jump to css definition
 
 ----- NAVIGATING A FILE -----
 zz  :  center the file on cursor
@@ -44,6 +64,7 @@ ctrl-u  :  move up half a screen
 ctrl-e  :  move screen down by 1
 ctrl-y  :  move screen up by 1
 ^  :  move to the first none whitespace character of the line
+]s : move to the next misspelled word
 
 ----- COPY AND PASTING -----
 "0p  :  paste from yank register
