@@ -1,5 +1,8 @@
 ----- EDITING A FILE -----
 
+gg=G  :  holy shit this properly indents the whole freaking file!! gg indeed
+=i{   :  smaller holy shit but this means 'fix indent' 'inside' '{'
+
 q[any key] : start macro recording into a register (press q at the end again to end the recording)
 @[that key]: replay the macro
 
@@ -72,6 +75,9 @@ ctrl-e  :  move screen down by 1
 ctrl-y  :  move screen up by 1
 ^  :  move to the first none whitespace character of the line
 ]s : move to the next misspelled word
+
+A  : Move to the end of the line and into insert mode
+I  : Move to the start of a line and into insert mode
 
 ----- COPY AND PASTING -----
 "0p  :  paste from yank register
