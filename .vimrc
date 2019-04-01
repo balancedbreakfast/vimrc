@@ -1,4 +1,6 @@
 " Requires Vim 7.4+, eslint, tern-config, and The Silver Searcher
+"
+" brew install the_silver_searcher
 
 " Vundle boilerplate and plugins
 set nocompatible
@@ -94,8 +96,8 @@ if executable('ag')
     " Bind K to grep word under cursor (only works w/ TSS)
     nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-    " Enable Ag command to search project for string
-    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+    " Enable Search command to search project for string
+    command -nargs=+ -complete=file -bar Search silent! grep! <args>|cwindow|redraw!
 
     " Use ag in CtrlP for listing files
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
@@ -103,9 +105,6 @@ if executable('ag')
     " ag is fast enough that CtrlP doesnt need to cache
     let g:ctrlp_use_caching = 0
 endif
-
-" :grep! shortcut
-command! -nargs=+ -complete=file -bar Search grep! <args>|cw
 
 " Cleanup netrw default vim file browser
 let g:netrw_banner=0 "disable banner
@@ -148,6 +147,8 @@ function! JumpToCSS()
     endif
   endif
 endfunction
-
 :command CSS :call JumpToCSS()
+
+" Ctrl-C copies selection to the system clipboard
+vnoremap <C-c> :w !pbcopy<CR><CR>
 
