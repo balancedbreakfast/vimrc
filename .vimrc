@@ -1,4 +1,4 @@
-" Requires Vim 7.4+, eslint, tern-config, and The Silver Searcher
+" Requires Vim 8+, eslint (per project basis for ale linting), and The Silver Searcher
 "
 " brew install the_silver_searcher
 
@@ -123,12 +123,11 @@ augroup END
 " for jsx linting to be enabled in regular .js files
 let g:jsx_ext_required = 0
 
-" Configure Ale to fix javascript
-" let g:ale_fixers = {
-" \   'javascript': ['eslint'],
-" \}
+" Ale linting QoL settings
+let g:ale_sign_error = '●' " Less aggressive than the default '>>'
+let g:ale_sign_warning = '.'
 
-" Set this to config Ale with  Airline.
+" Set this to config Ale with Airline.
 let g:airline#extensions#ale#enabled = 1
 
 " Jump to CSS definition using :CSS
