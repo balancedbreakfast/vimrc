@@ -1,50 +1,38 @@
-" Requires Vim 7.4+, eslint, tern-config, and The Silver Searcher
+" Requires Vim 8.1+, vim-plug, eslint, and The Silver Searcher
 "
 " brew install the_silver_searcher
 
-" Vundle boilerplate and plugins
-set nocompatible
-filetype off
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
 " Plugin Manager
-Plugin 'VundleVim/Vundle.vim'
+" vim-plug config. Specify a directory for plugins
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
 " File System Sidebar
-Plugin 'scrooloose/nerdtree'
-
+Plug 'scrooloose/nerdtree'
 " Git commands within vim
-Plugin 'tpope/vim-fugitive'
-
+Plug 'tpope/vim-fugitive'
 " Dark color scheme
-Plugin 'joshdick/onedark.vim'
-
+Plug 'joshdick/onedark.vim'
 " Ctrl-p file fuzzy search
-Plugin 'kien/ctrlp.vim'
-
+Plug 'kien/ctrlp.vim'
 " Linting Engine
-Plugin 'w0rp/ale'
-
+Plug 'w0rp/ale'
 " Lean status bar
-Plugin 'vim-airline/vim-airline'
-
+Plug 'vim-airline/vim-airline'
 " Shows symbols for git diffs in the gutter (where the line numbers are)
-Plugin 'airblade/vim-gitgutter'
-
-" Automatically opens autocomplete popup menu (easy to forget this is a thing
-" that needs to be configured)
-Plugin 'vim-scripts/AutoComplPop'
-
+Plug 'airblade/vim-gitgutter'
 " Intuitive commands for quoting/parenthesizing/surrounding some word/text
 " with something else
-Plugin 'tpope/vim-surround'
-
+Plug 'tpope/vim-surround'
 " Syntax highlighting for like all languages
-Plugin 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
+" Language Server (Intellisense) Engine
+" Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-call vundle#end()
+" Plugin system end
+call plug#end()
+
 filetype plugin indent on
 
 " ======================================
@@ -127,8 +115,6 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
 
-
-
 " ======================================
 " ==== Custom Commands and Hotkeys =====
 " ======================================
@@ -160,11 +146,28 @@ endfunction
 " Ctrl-C copies selection to the system clipboard
 vnoremap <C-c> :w !pbcopy<CR><CR>
 
-
-
 " ======================================
 " ========= Plugin Enhancements =========
 " ======================================
+
+" ===== CoC.nvim Config =====
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" GoTo code navigation. Buggy, crashes on many edge case 'gd's
+" Potential Solution - add a jsconfig.json file in the project directory and
+" add { "jsx": "react" }
+" I'm still keeping this off because I don't want to add that file in every
+" project I do.
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+
+" Faster buffer update time, for gitgutter, coc.nvim, but affects the whole
+" environment
+set updatetime=300
 
 " The Silver Searcher
 if executable('ag')
@@ -211,4 +214,20 @@ augroup END
 " for jsx linting to be enabled in regular .js files
 let g:jsx_ext_required = 0
 
+" gf commmand (go to file) working for node_module ES6 imports... Amazing...
+" Careful that it could break other languages, but unlikely because I think it
+" just works as a fallback mechanism, so at worst doing gf in python if it's
+" not importing from a proper relative path for example would come back as 'file not found'.
+set path=.,src,node_nodules
+set suffixesadd=.js,.jsx
+function! LoadMainNodeModule(fname)
+    let nodeModules = "./node_modules/"
+    let packageJsonPath = nodeModules . a:fname . "/package.json"
 
+    if filereadable(packageJsonPath)
+        return nodeModules . a:fname . "/" . json_decode(join(readfile(packageJsonPath))).main
+    else
+        return nodeModules . a:fname
+    endif
+endfunction
+set includeexpr=LoadMainNodeModule(v:fname)
