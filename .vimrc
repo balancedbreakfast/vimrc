@@ -1,4 +1,4 @@
-" Requires Vim 8.1+, vim-plug, eslint, and The Silver Searcher
+" Requires Vim 8.1+, vim-plug, node, and The Silver Searcher
 "
 " brew install the_silver_searcher
 
@@ -9,8 +9,6 @@ call plug#begin('~/.vim/plugged')
 
 " File System Sidebar
 Plug 'scrooloose/nerdtree'
-" Git commands within vim
-Plug 'tpope/vim-fugitive'
 " Dark color scheme
 Plug 'joshdick/onedark.vim'
 " Ctrl-p file fuzzy search
@@ -22,10 +20,11 @@ Plug 'vim-airline/vim-airline'
 " Shows symbols for git diffs in the gutter (where the line numbers are)
 Plug 'airblade/vim-gitgutter'
 " Intuitive commands for quoting/parenthesizing/surrounding some word/text
-" with something else
 Plug 'tpope/vim-surround'
 " Syntax highlighting for like all languages
-Plug 'sheerun/vim-polyglot'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+
 " Language Server (Intellisense) Engine
 " Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -51,6 +50,7 @@ endif
 
 " Basic Setup - colors, tabs, line numbers
 syntax on
+set redrawtime=10000
 set t_Co=256
 set t_ut=
 colorscheme onedark
@@ -155,16 +155,6 @@ vnoremap <C-c> :w !pbcopy<CR><CR>
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
-" GoTo code navigation. Buggy, crashes on many edge case 'gd's
-" Potential Solution - add a jsconfig.json file in the project directory and
-" add { "jsx": "react" }
-" I'm still keeping this off because I don't want to add that file in every
-" project I do.
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
-
 " Faster buffer update time, for gitgutter, coc.nvim, but affects the whole
 " environment
 set updatetime=300
@@ -209,6 +199,12 @@ augroup javascript_folding
     au FileType javascript setlocal foldmethod=indent " This line causes lag when foldmethod-syntax
     " Set folds to be auto opened
     autocmd FileType javascript normal zR
+augroup END
+
+" Typescript Syntax on tsx files
+augroup SyntaxSettings
+  autocmd!
+  autocmd BufNewFile,BufRead *.tsx set filetype=typescript
 augroup END
 
 " for jsx linting to be enabled in regular .js files
