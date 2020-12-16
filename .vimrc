@@ -13,8 +13,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'joshdick/onedark.vim'
 " Ctrl-p file fuzzy search
 Plug 'kien/ctrlp.vim'
-" Linting Engine
-Plug 'w0rp/ale'
 " Lean status bar
 Plug 'vim-airline/vim-airline'
 " Shows symbols for git diffs in the gutter (where the line numbers are)
@@ -26,7 +24,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 
 " Language Server (Intellisense) Engine
-" Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css
+" Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css coc-eslint
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plugin system end
@@ -115,6 +113,18 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
 
+" Turn off auto-indent when pasting in insert mode
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
 " ======================================
 " ==== Custom Commands and Hotkeys =====
 " ======================================
@@ -181,14 +191,6 @@ endif
 " ignore node_modules and other files when using ctrl-p
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
-" Ale linting QoL settings
-let g:ale_sign_error = '●' " Less aggressive than the default '>>'
-let g:ale_sign_warning = '.'
-
-" Set this to config Ale with Airline.
-let g:airline#extensions#ale#enabled = 1
-
-
 " ======================================
 " ========Javascript Specific ==========
 " ======================================
@@ -204,7 +206,13 @@ augroup END
 " Typescript Syntax on tsx files
 augroup SyntaxSettings
   autocmd!
-  autocmd BufNewFile,BufRead *.tsx set filetype=typescript
+  autocmd BufNewFile,BufRead *.tsx set filetype=typescriptreact
+augroup END
+
+" Syntax on jsx files
+augroup SyntaxSettings
+  autocmd!
+  autocmd BufNewFile,BufRead *.jsx set filetype=javascriptreact
 augroup END
 
 " for jsx linting to be enabled in regular .js files
