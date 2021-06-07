@@ -5,6 +5,14 @@
 " Plugin Manager
 " vim-plug config. Specify a directory for plugins
 " - Avoid using standard Vim directory names like 'plugin'
+
+" Install vim-plug
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.vim/plugged')
 
 " File System Sidebar
@@ -21,7 +29,10 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 " Syntax highlighting for like all languages
 Plug 'pangloss/vim-javascript'
+" Typescript
 Plug 'leafgarland/typescript-vim'
+" React jsx/tsx indentation
+Plug 'maxmellon/vim-jsx-pretty'
 
 " Language Server (Intellisense) Engine
 " Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css coc-eslint
