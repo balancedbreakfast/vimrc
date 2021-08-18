@@ -35,7 +35,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
 
 " Language Server (Intellisense) Engine
-" Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css coc-eslint
+" Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css coc-eslint coc-prettier
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plugin system end
