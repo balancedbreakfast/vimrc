@@ -9,18 +9,18 @@ export NVM_DIR="$HOME/.nvm"
 # Something to do with the prompt theme functionality
 fpath=($fpath "/Users/eric/.zfunctions")
 
-# Set the prompt theme to typewritten: https://github.com/reobin/typewritten
-# With my preferences configured
+# Set the prompt theme to typewritten, a lightweight zsh theme. With my preferences configured
+# Install instructions https://github.com/reobin/typewritten
 autoload -U promptinit; promptinit
 prompt typewritten
 export TYPEWRITTEN_PROMPT_LAYOUT="pure"
 export TYPEWRITTEN_CURSOR="block"
 
-# https://github.com/zsh-users/zsh-autosuggestions
+# Useful Plugin: https://github.com/zsh-users/zsh-autosuggestions
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 export TERM=xterm-256color # Fixes autosuggestion color along with manually setting ANSI black bright to a light gray
 
-# https://github.com/zsh-users/zsh-syntax-highlighting
+# Useful Plugin https://github.com/zsh-users/zsh-syntax-highlighting
 # Must be at the end of .zshrc
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
