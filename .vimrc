@@ -33,6 +33,12 @@ Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 " React jsx/tsx indentation
 Plug 'maxmellon/vim-jsx-pretty'
+" Add brackets, parens, quotes in pairs
+Plug 'jiangmiao/auto-pairs'
+" use gcc to comment out a line, or gc to comment out a block
+Plug 'tpope/vim-commentary'
+" Automatically adds the 'end' keyboard
+Plug 'tpope/vim-endwise'
 
 " Language Server (Intellisense) Engine
 " Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css coc-eslint coc-prettier
