@@ -39,6 +39,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
 " Automatically adds the 'end' keyboard
 Plug 'tpope/vim-endwise'
+" Vim git plugin
+Plug 'tpope/vim-fugitive'
 
 " Language Server (Intellisense) Engine
 " Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css coc-eslint coc-prettier
@@ -206,7 +208,11 @@ if executable('ag')
 endif
 
 " ignore node_modules and other files when using ctrl-p
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git$\'
+
+
+" Bind F to :NERDTreeFind which finds the current file in the tree.
+nnoremap F :NERDTreeFind<CR>
 
 " ======================================
 " ========Javascript Specific ==========
@@ -239,8 +245,10 @@ let g:jsx_ext_required = 0
 " Careful that it could break other languages, but unlikely because I think it
 " just works as a fallback mechanism, so at worst doing gf in python if it's
 " not importing from a proper relative path for example would come back as 'file not found'.
-set path=.,src,node_nodules
+set path=.,src,$PWD/**,node_nodules
 set suffixesadd=.js,.jsx
+" allows @ to be recognized as a character
+set isfname+=@-@
 function! LoadMainNodeModule(fname)
     let nodeModules = "./node_modules/"
     let packageJsonPath = nodeModules . a:fname . "/package.json"
@@ -252,3 +260,11 @@ function! LoadMainNodeModule(fname)
     endif
 endfunction
 set includeexpr=LoadMainNodeModule(v:fname)
+
+" For coc-prettier, enables :Prettier command and <leader>f command
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Autosave on insert mode exit
+autocmd InsertLeave * write
