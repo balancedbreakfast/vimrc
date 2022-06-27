@@ -13,7 +13,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
 " File System Sidebar
 Plug 'scrooloose/nerdtree'
@@ -37,7 +37,7 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'jiangmiao/auto-pairs'
 " use gcc to comment out a line, or gc to comment out a block
 Plug 'tpope/vim-commentary'
-" Automatically adds the 'end' keyboard
+" Automatically adds the 'end' keyword in ruby files
 Plug 'tpope/vim-endwise'
 " Vim git plugin
 Plug 'tpope/vim-fugitive'
@@ -95,7 +95,6 @@ set showmatch
 set incsearch
 set hlsearch
 
-
 " ======================================
 " ==== Quality of Life/Ease of Use =====
 " ======================================
@@ -105,6 +104,9 @@ autocmd vimenter * NERDTree
 
 " autosave
 set autowriteall
+
+" Autosave on insert mode exit
+autocmd InsertLeave * write
 
 " Spell check on markdown files
 autocmd FileType markdown setlocal spell spelllang=en_us
@@ -136,8 +138,9 @@ let g:netrw_winsize = 25
 let &t_SI .= "\<Esc>[?2004h"
 let &t_EI .= "\<Esc>[?2004l"
 
+" Quality of life improvement for copy pasting
+" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
 function! XTermPasteBegin()
   set pastetoggle=<Esc>[201~
   set paste
@@ -154,24 +157,6 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
-" Jump to CSS definition using :CSS
-function! JumpToCSS()
-  set iskeyword+=-
-  let id_pos = searchpos("id", "nb", line('.'))[1]
-  let class_pos = searchpos("class", "nb", line('.'))[1]
-
-  if class_pos > 0 || id_pos > 0
-    if class_pos < id_pos
-      execute ":vim '#".expand('<cword>')."' **/*.css"
-      execute ":normal zz"
-    elseif class_pos > id_pos
-      execute ":vim '.".expand('<cword>')."' **/*.css"
-      execute ":normal zz"
-    endif
-  endif
-endfunction
-:command CSS :call JumpToCSS()
-
 " Ctrl-C copies selection to the system clipboard
 vnoremap <C-c> :w !pbcopy<CR><CR>
 
@@ -184,14 +169,20 @@ vnoremap <C-c> :w !pbcopy<CR><CR>
 " diagnostics appear/become resolved.
 set signcolumn=yes
 
+" For coc-prettier, enables :Prettier command and <leader>f command
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
 " Faster buffer update time, for gitgutter, coc.nvim, but affects the whole
 " environment
 set updatetime=300
 
 " The Silver Searcher
 if executable('ag')
-    " Use ag over grep
-    set grepprg=ag\ --nogroup\ --nocolor
+    " Use ag over grep, ignore node_modules, dist and build folders when
+    " searching
+    set grepprg=ag\ --nogroup\ --nocolor\ --ignore={'*node_modules*','*dist*','*build*'}
 
     " Bind K to grep word under cursor (only works w/ TSS)
     nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -218,14 +209,6 @@ nnoremap F :NERDTreeFind<CR>
 " ========Javascript Specific ==========
 " ======================================
 
-" Javascript Folding
-augroup javascript_folding
-    au!
-    au FileType javascript setlocal foldmethod=indent " This line causes lag when foldmethod-syntax
-    " Set folds to be auto opened
-    autocmd FileType javascript normal zR
-augroup END
-
 " Typescript Syntax on tsx files
 augroup SyntaxSettings
   autocmd!
@@ -246,7 +229,7 @@ let g:jsx_ext_required = 0
 " just works as a fallback mechanism, so at worst doing gf in python if it's
 " not importing from a proper relative path for example would come back as 'file not found'.
 set path=.,src,$PWD/**,node_nodules
-set suffixesadd=.js,.jsx
+set suffixesadd=.js,.jsx,.tsx
 " allows @ to be recognized as a character
 set isfname+=@-@
 function! LoadMainNodeModule(fname)
@@ -261,10 +244,3 @@ function! LoadMainNodeModule(fname)
 endfunction
 set includeexpr=LoadMainNodeModule(v:fname)
 
-" For coc-prettier, enables :Prettier command and <leader>f command
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Autosave on insert mode exit
-autocmd InsertLeave * write
