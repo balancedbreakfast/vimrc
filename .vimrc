@@ -196,6 +196,10 @@ if executable('ag')
     " ag is fast enough that CtrlP doesnt need to cache. Also not caching
     " allows you to find newly created files without restarting vim
     let g:ctrlp_use_caching = 0
+
+    " Configure ctrlp to only search under vim's current working directory
+    " Useful for monorepos
+    " let g:ctrlp_working_path_mode = ''
 endif
 
 " ignore node_modules and other files when using ctrl-p
