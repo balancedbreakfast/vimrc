@@ -43,7 +43,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 
 " Language Server (Intellisense) Engine
-" Need to install language servers if on a new machine. For example - :CocInstall coc-tsserver coc-json coc-html coc-css coc-eslint coc-prettier
+" Need to install language servers if on a new machine. For example - :CocInstall coc-pyright coc-tsserver coc-json coc-html coc-css coc-eslint coc-prettier
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plugin system end
